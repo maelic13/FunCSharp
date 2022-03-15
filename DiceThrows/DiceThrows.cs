@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace DiceThrows
 {
-    internal static class Program
+    internal static class DiceThrows
     {
         private static IEnumerable<int> GetThrows(int dice, int numThrows, int iterations) 
         {

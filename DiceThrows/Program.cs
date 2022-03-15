@@ -2,12 +2,13 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace DiceThrows
 {
     internal static class Program
     {
-        private static IEnumerable<int> GetThrows(int dice, int numThrows, int iterations)
+        private static List<int> GetThrows(int dice, int numThrows, int iterations)
         {
             var rnd = new Random();
             var numbers = new List<int>();
@@ -25,6 +26,25 @@ namespace DiceThrows
             return numbers;
         }
 
+        private static List<int> GetThrowsWithThreading(int dice, int numThrows, int iterations)
+        {
+            if (iterations < 32000)
+            {
+                return GetThrows(dice, numThrows, iterations);
+            }
+
+            var interval = iterations / 32;
+            var inputList = new List<int>();
+            var subResults = new List<List<int>>();
+            var numbers = new List<int>();
+            
+            for (var i = 0; i < 32; i++) { inputList.Add(interval); }
+            inputList[inputList.Count - 1] += iterations % 32;
+            Parallel.ForEach(inputList, sub => subResults.Add(GetThrows(dice, numThrows, sub)));
+            subResults.ForEach(subResult => subResult.ForEach(number => numbers.Add(number)));
+            return numbers;
+        }
+
         public static void Main(string[] args) 
         {
             const int dice = 20;
@@ -32,8 +52,9 @@ namespace DiceThrows
             const int iterations = 1000000;
 
             var watch = Stopwatch.StartNew();
-            var numbers = GetThrows(dice, numAttempts, iterations);
+            var numbers = GetThrowsWithThreading(dice, numAttempts, iterations);
             watch.Stop();
+
 
             var grp = numbers.GroupBy(i => i);
             grp = grp.OrderBy(i => i.Key);

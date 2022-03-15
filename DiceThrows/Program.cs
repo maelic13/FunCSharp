@@ -5,9 +5,9 @@ using System.Linq;
 
 namespace DiceThrows
 {
-    internal static class DiceThrows
+    internal static class Program
     {
-        private static IEnumerable<int> GetThrows(int dice, int numThrows, int iterations) 
+        private static IEnumerable<int> GetThrows(int dice, int numThrows, int iterations)
         {
             var rnd = new Random();
             var numbers = new List<int>();

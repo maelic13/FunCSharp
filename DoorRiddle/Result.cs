@@ -4,9 +4,9 @@ namespace DoorRiddle
 {
     public class Result
     {
-        public int Successful { get; private set; }
-        public int Total { get; private set; }
-        public int Failed => Total - Successful;
+        public long Successful { get; private set; }
+        public long Total { get; private set; }
+        public long Failed => Total - Successful;
         public double SuccessRate => (double)Successful / Total;
         
         public Result()
@@ -15,7 +15,7 @@ namespace DoorRiddle
             Total = 0;
         }
 
-        public Result(int successful, int total)
+        public Result(long successful, long total)
         {
             Successful = successful;
             Total = total;
@@ -23,8 +23,8 @@ namespace DoorRiddle
 
         public static Result Combine(List<Result> results)
         {
-            var successful = 0;
-            var total = 0;
+            long successful = 0;
+            long total = 0;
             
             foreach (var result in results)
             {

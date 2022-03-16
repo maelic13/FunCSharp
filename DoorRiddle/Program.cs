@@ -16,7 +16,7 @@ namespace DoorRiddle
          and open the remaining closed door instead? Which option maximizes your chances of finding treasure?
          */
         {
-            const int cycles = 1000000000;
+            const long cycles = 1000000000;
             var cpus = Environment.ProcessorCount;
 
             var watch = Stopwatch.StartNew();
@@ -30,7 +30,7 @@ namespace DoorRiddle
             PrintResultsToConsole(resultNoChange, watch, cycles, false);
         }
         
-        private static Result PlayGame(int cycles, bool changeChoice)
+        private static Result PlayGame(long cycles, bool changeChoice)
         {
             var doors = new bool[3];
             doors[0] = false;
@@ -47,10 +47,10 @@ namespace DoorRiddle
             return result;
         }
         
-        private static Result PlayGameMultiThreaded(int cycles, bool changeChoice, int cpus)
+        private static Result PlayGameMultiThreaded(long cycles, bool changeChoice, int cpus)
         {
             var interval = cycles / cpus;
-            var inputList = new List<int>();
+            var inputList = new List<long>();
             var results = new List<Result>();
             
             for (var i = 0; i < cpus; i++) { inputList.Add(interval); }
@@ -60,12 +60,12 @@ namespace DoorRiddle
             return Result.Combine(results);
         }
 
-        private static void PrintResultsToConsole(Result result, Stopwatch watch, int cycles, bool changeChoice)
+        private static void PrintResultsToConsole(Result result, Stopwatch watch, long cycles, bool changeChoice)
         {
             Console.WriteLine();
             Console.WriteLine($"Change = {changeChoice}. Time elapsed {watch.Elapsed}");
             Console.WriteLine(result.ToString());
-            Console.WriteLine($"Speed = {cycles / (watch.ElapsedMilliseconds / 1000) / 1000000} Miter/s.");
+            Console.WriteLine($"Speed = {cycles / watch.ElapsedMilliseconds / 1000} Miter/s.");
         }
     }
 }

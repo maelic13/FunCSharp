@@ -18,21 +18,15 @@ namespace DoorRiddle
         {
             const int cycles = 1000000000;
 
-            var watch1 = Stopwatch.StartNew();
+            var watch = Stopwatch.StartNew();
             var resultWithChange = PlayGameMultiThreaded(cycles, true);
-            watch1.Stop();
-            Console.WriteLine($"Change = True. Time elapsed {watch1.Elapsed}");
-            Console.WriteLine(resultWithChange.ToString());
-            Console.WriteLine($"Speed = {cycles / (watch1.ElapsedMilliseconds / 1000) / 1000000} Miter/s.");
-
-            Console.WriteLine();
+            watch.Stop();
+            PrintResultsToConsole(resultWithChange, watch, cycles, true);
             
-            var watch2 = Stopwatch.StartNew();
+            watch.Restart();
             var resultNoChange = PlayGameMultiThreaded(cycles, false);
-            watch2.Stop();
-            Console.WriteLine($"Change = False. Time elapsed {watch2.Elapsed}");
-            Console.WriteLine(resultNoChange.ToString());
-            Console.WriteLine($"Speed = {cycles / (watch2.ElapsedMilliseconds / 1000) / 1000000} Miter/s.");
+            watch.Stop();
+            PrintResultsToConsole(resultNoChange, watch, cycles, false);
         }
         
         private static Result PlayGame(int cycles, bool changeChoice = false)
@@ -69,6 +63,14 @@ namespace DoorRiddle
             
             Parallel.ForEach(inputList, sub => results.Add(PlayGame(sub, changeChoice)));
             return Result.Combine(results);
+        }
+
+        private static void PrintResultsToConsole(Result result, Stopwatch watch, int cycles, bool changeChoice)
+        {
+            Console.WriteLine();
+            Console.WriteLine($"Change = {changeChoice}. Time elapsed {watch.Elapsed}");
+            Console.WriteLine(result.ToString());
+            Console.WriteLine($"Speed = {cycles / (watch.ElapsedMilliseconds / 1000) / 1000000} Miter/s.");
         }
     }
 }

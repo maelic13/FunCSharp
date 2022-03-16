@@ -18,25 +18,17 @@ namespace DiceThrows
             const int iterations = 1000000;
 
             var watch = Stopwatch.StartNew();
-            var numbers = GetThrowsMultiThreaded(dice, attempts, iterations, Environment.ProcessorCount);
+            var result = GetThrowsMultiThreaded(dice, attempts, iterations, Environment.ProcessorCount);
             watch.Stop();
-
-
-            var grp = numbers.GroupBy(i => i);
-            grp = grp.OrderBy(i => i.Key);
             
-            // uncomment to write results to console
-            // foreach (var x in grp)
-            // {
-            //     Console.WriteLine($"{x.Key}: {x.Count()}");
-            // }
+            // result.PrintToConsole();
             Console.WriteLine($"Execution took {watch.Elapsed}.");
         }
         
-        private static List<int> GetThrows(int dice, int numThrows, int iterations)
+        private static Result GetThrows(int dice, int numThrows, int iterations)
         {
             var rnd = new Random();
-            var numbers = new List<int>();
+            var result = new Result();
             
             for (var i = 0; i < iterations; i++)
             {
@@ -45,24 +37,22 @@ namespace DiceThrows
                 {
                     number += rnd.Next(1, dice + 1);
                 }
-                numbers.Add(number);
+                result.AddThrow(number);
             }
 
-            return numbers;
+            return result;
         }
 
-        private static List<int> GetThrowsMultiThreaded(int dice, int numThrows, int iterations, int cpus)
+        private static Result GetThrowsMultiThreaded(int dice, int numThrows, int iterations, int cpus)
         {
             var interval = iterations / cpus;
             var inputList = new List<int>();
-            var subResults = new List<List<int>>();
-            var numbers = new List<int>();
+            var results = new List<Result>();
             
             for (var i = 0; i < cpus; i++) { inputList.Add(interval); }
             inputList[inputList.Count - 1] += iterations % cpus;
-            Parallel.ForEach(inputList, sub => subResults.Add(GetThrows(dice, numThrows, sub)));
-            subResults.ForEach(subResult => subResult.ForEach(number => numbers.Add(number)));
-            return numbers;
+            Parallel.ForEach(inputList, sub => results.Add(GetThrows(dice, numThrows, sub)));
+            return Result.Combine(results);
         }
     }
 }

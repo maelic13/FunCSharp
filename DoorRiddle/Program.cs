@@ -17,19 +17,20 @@ namespace DoorRiddle
          */
         {
             const int cycles = 1000000000;
+            var cpus = Environment.ProcessorCount;
 
             var watch = Stopwatch.StartNew();
-            var resultWithChange = PlayGameMultiThreaded(cycles, true);
+            var resultWithChange = PlayGameMultiThreaded(cycles, true, cpus);
             watch.Stop();
             PrintResultsToConsole(resultWithChange, watch, cycles, true);
             
             watch.Restart();
-            var resultNoChange = PlayGameMultiThreaded(cycles, false);
+            var resultNoChange = PlayGameMultiThreaded(cycles, false, cpus);
             watch.Stop();
             PrintResultsToConsole(resultNoChange, watch, cycles, false);
         }
         
-        private static Result PlayGame(int cycles, bool changeChoice = false)
+        private static Result PlayGame(int cycles, bool changeChoice)
         {
             var doors = new bool[3];
             doors[0] = false;
@@ -46,14 +47,8 @@ namespace DoorRiddle
             return result;
         }
         
-        // 32 cpus is usually maximum for personal computers. C# multithreading will handle if you have less.
-        private static Result PlayGameMultiThreaded(int cycles, bool changeChoice = false, int cpus = 32)
+        private static Result PlayGameMultiThreaded(int cycles, bool changeChoice, int cpus)
         {
-            if (cycles < 1000000)
-            {
-                return PlayGame(cycles, changeChoice);
-            }
-            
             var interval = cycles / cpus;
             var inputList = new List<int>();
             var results = new List<Result>();

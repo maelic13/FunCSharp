@@ -18,7 +18,7 @@ namespace DiceThrows
             const int iterations = 1000000;
 
             var watch = Stopwatch.StartNew();
-            var numbers = GetThrowsMultiThreaded(dice, attempts, iterations);
+            var numbers = GetThrowsMultiThreaded(dice, attempts, iterations, Environment.ProcessorCount);
             watch.Stop();
 
 
@@ -51,14 +51,8 @@ namespace DiceThrows
             return numbers;
         }
 
-        // 32 cpus is usually maximum for personal computers. C# multithreading will handle if you have less.
-        private static List<int> GetThrowsMultiThreaded(int dice, int numThrows, int iterations, int cpus = 32)
+        private static List<int> GetThrowsMultiThreaded(int dice, int numThrows, int iterations, int cpus)
         {
-            if (iterations < 32000)
-            {
-                return GetThrows(dice, numThrows, iterations);
-            }
-
             var interval = iterations / cpus;
             var inputList = new List<int>();
             var subResults = new List<List<int>>();

@@ -2,6 +2,8 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DiceThrows", "DiceThrows\DiceThrows.csproj", "{B3E011E9-4951-4AE5-8CCE-DAC530761ADA}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DoorRiddle", "DoorRiddle\DoorRiddle.csproj", "{FD430228-D49B-42FA-8F95-BB97C0EEC700}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -12,5 +14,9 @@ Global
 		{B3E011E9-4951-4AE5-8CCE-DAC530761ADA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B3E011E9-4951-4AE5-8CCE-DAC530761ADA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B3E011E9-4951-4AE5-8CCE-DAC530761ADA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FD430228-D49B-42FA-8F95-BB97C0EEC700}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FD430228-D49B-42FA-8F95-BB97C0EEC700}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FD430228-D49B-42FA-8F95-BB97C0EEC700}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FD430228-D49B-42FA-8F95-BB97C0EEC700}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

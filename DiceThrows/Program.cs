@@ -16,9 +16,10 @@ namespace DiceThrows
             const int dice = 20;
             const int attempts = 100;
             const int iterations = 1000000;
+            var cpus = Environment.ProcessorCount;
 
             var watch = Stopwatch.StartNew();
-            var result = GetThrowsMultiThreaded(dice, attempts, iterations, Environment.ProcessorCount);
+            var result = GetThrowsMultiThreaded(dice, attempts, iterations, cpus);
             watch.Stop();
             
             // result.PrintToConsole();
@@ -45,6 +46,11 @@ namespace DiceThrows
 
         private static Result GetThrowsMultiThreaded(int dice, int numThrows, int iterations, int cpus)
         {
+            if (cpus == 1)
+            {
+                return GetThrows(dice, numThrows, iterations);
+            }
+            
             var interval = iterations / cpus;
             var inputList = new List<int>();
             var results = new List<Result>();

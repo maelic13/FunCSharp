@@ -49,6 +49,11 @@ namespace DoorRiddle
         
         private static Result PlayGameMultiThreaded(long cycles, bool changeChoice, int cpus)
         {
+            if (cpus == 1)
+            {
+                return PlayGame(cycles, changeChoice);
+            }
+            
             var interval = cycles / cpus;
             var inputList = new List<long>();
             var results = new List<Result>();

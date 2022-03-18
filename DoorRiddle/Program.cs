@@ -32,10 +32,7 @@ namespace DoorRiddle
         
         private static Result PlayGame(long cycles, bool changeChoice)
         {
-            var doors = new bool[3];
-            doors[0] = false;
-            doors[1] = true;
-            doors[2] = false;
+            var doors = new List<bool> { false, true, false };
             var rnd = new Random();
             var result = new Result();
 

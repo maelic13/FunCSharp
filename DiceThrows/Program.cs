@@ -35,7 +35,7 @@ namespace DiceThrows
                 var number = 0;
                 for (var j = 0; j < numThrows; j++)
                 {
-                    number += rnd.Next(1, dice + 1);
+                    number += rnd.Next(dice) + 1;
                 }
                 result.AddThrow(number);
             }

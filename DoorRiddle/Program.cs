@@ -65,7 +65,7 @@ namespace DoorRiddle
         private static void PrintResultsToConsole(Result result, Stopwatch watch, long cycles, bool changeChoice)
         {
             Console.WriteLine();
-            Console.WriteLine($"Change = {changeChoice}. Time elapsed {watch.Elapsed}");
+            Console.WriteLine($"Change = {changeChoice}. Time elapsed {watch.ElapsedMilliseconds} ms.");
             Console.WriteLine(result.ToString());
             Console.WriteLine($"Speed = {cycles / watch.ElapsedMilliseconds / 1000} Miter/s.");
         }

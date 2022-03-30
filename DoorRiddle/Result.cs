@@ -4,35 +4,35 @@ namespace DoorRiddle
 {
     public class Result
     {
+        public long Failed { get; private set; }
         public long Successful { get; private set; }
-        public long Total { get; private set; }
-        public long Failed => Total - Successful;
+        public long Total => Failed + Successful;
         public double SuccessRate => (double)Successful / Total;
         
         public Result()
         {
+            Failed = 0;
             Successful = 0;
-            Total = 0;
         }
 
-        public Result(long successful, long total)
+        public Result(long failed, long successful)
         {
+            Failed = failed;
             Successful = successful;
-            Total = total;
         }
 
         public static Result Combine(List<Result> results)
         {
+            long failed = 0;
             long successful = 0;
-            long total = 0;
             
             foreach (var result in results)
             {
                 successful += result.Successful;
-                total += result.Total;
+                failed += result.Failed;
             }
             
-            return new Result(successful, total);
+            return new Result(failed, successful);
         }
         
         public new string ToString() => $"{Successful} successful tries, {Total} total. " +
@@ -40,8 +40,14 @@ namespace DoorRiddle
 
         public void AddTry(bool result)
         {
-            Total += 1;
-            if (result) { Successful += 1; }
+            if (result)
+            {
+                Successful += 1;
+            }
+            else
+            {
+                Failed += 1; 
+            }
         }
     }
 }

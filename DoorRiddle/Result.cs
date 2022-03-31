@@ -38,13 +38,6 @@ public class Result
 
     public void AddTry(bool result)
     {
-        if (result)
-        {
-            Successful += 1;
-        }
-        else
-        {
-            Failed += 1; 
-        }
+        if (result) Successful++; else Failed++;
     }
 }

@@ -33,26 +33,22 @@ internal static class Program
         var rnd = new Random();
         var result = new Result();
 
-        for (var i = 0; i < cycles; i++)
-        {
+        for (var i = 0; i < cycles; i++) 
             result.AddTry(changeChoice != doors[rnd.Next(3)]);
-        }
-            
         return result;
     }
         
     private static Result PlayGameMultiThreaded(long cycles, bool changeChoice, int cpus)
     {
-        if (cpus == 1)
-        {
+        if (cpus == 1) 
             return PlayGame(cycles, changeChoice);
-        }
             
         var interval = cycles / cpus;
         var inputList = new List<long>();
         var results = new List<Result>();
             
-        for (var i = 0; i < cpus; i++) { inputList.Add(interval); }
+        for (var i = 0; i < cpus; i++) 
+            inputList.Add(interval);
         inputList[^1] += cycles % cpus;
             
         Parallel.ForEach(inputList, sub => results.Add(PlayGame(sub, changeChoice)));

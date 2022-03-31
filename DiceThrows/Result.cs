@@ -17,7 +17,7 @@ public class Result
     public void AddThrow(int number)
     {
         if (!Throws.ContainsKey(number)) { Throws.Add(number, 1); return; }
-        Throws[number] += 1;
+        Throws[number]++;
     }
         
     public static Result Combine(List<Result> results)

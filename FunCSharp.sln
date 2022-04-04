@@ -6,6 +6,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FibonacciSequence", "Fibona
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DoorRiddle", "DoorRiddle\DoorRiddle.csproj", "{537B0048-A700-489B-9226-54F5A29C9D4A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SudokuSolver", "SudokuSolver\SudokuSolver.csproj", "{5E8EC112-7182-4D2D-8DA9-252FFDCB1A8D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -24,5 +26,9 @@ Global
 		{537B0048-A700-489B-9226-54F5A29C9D4A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{537B0048-A700-489B-9226-54F5A29C9D4A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{537B0048-A700-489B-9226-54F5A29C9D4A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5E8EC112-7182-4D2D-8DA9-252FFDCB1A8D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5E8EC112-7182-4D2D-8DA9-252FFDCB1A8D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5E8EC112-7182-4D2D-8DA9-252FFDCB1A8D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5E8EC112-7182-4D2D-8DA9-252FFDCB1A8D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

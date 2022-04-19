@@ -6,14 +6,15 @@ internal class Board
     private List<Move> MoveHistory { get; }
     public int[,] Root { get; }
     private int BoardSizeIndex;
-    private int BoardSize => (int)Math.Pow(BoardSizeIndex, 2);
+    private int BoardSize;
 
     public Board(int[,] board)
     {
-        CurrentBoard = (int[,])board.Clone();
-        MoveHistory = new List<Move> { };
-        Root = (int[,])board.Clone();
+        CurrentBoard = (int[,]) board.Clone();
+        MoveHistory = new List<Move>();
+        Root = (int[,]) board.Clone();
         BoardSizeIndex = (int) Math.Pow(board.Length, 1.0 / 4);
+        BoardSize = (int) Math.Pow(BoardSizeIndex, 2);
 
         if ((int)Math.Pow(BoardSizeIndex, 4) != board.Length)
         {
@@ -27,11 +28,6 @@ internal class Board
     {
         var boardSize = (int)Math.Pow(boardSizeIndex, 2);
         return new int[boardSize, boardSize];
-    }
-
-    public bool Equals(Board other)
-    {
-        return true;
     }
 
     public int UnfilledCount()
@@ -51,7 +47,7 @@ internal class Board
 
     public bool Valid()
     {
-        return AllColumnsValid() && AllColumnsValid() && AllSectorsValid();
+        return AllRowsValid() && AllColumnsValid() && AllSectorsValid();
     }
 
     public bool Win()
@@ -134,11 +130,12 @@ internal class Board
 
     public bool UnmakeLastMove()
     {
-        if (MoveHistory.Count == 0) { return false; }
-
-        var move = MoveHistory[^1];
+        var move = MoveHistory.LastOrDefault();
+        if (move == null) return false;
+        
         CurrentBoard[move.Row, move.Column] = 0;
         MoveHistory.Remove(move);
+
         return true;
     }
 
@@ -249,5 +246,5 @@ internal class Board
             }
         }
         return true;
-    } 
+    }
 }

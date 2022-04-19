@@ -36,20 +36,15 @@ internal static class Program
         var taskBoard2 = new Board(new[,]
         {
             {6, 9, 2, 8, 7, 1, 4, 5, 3},
-            {1, 8, 5, 3, 4, 9, 2, 6, 7},
+            {1, 8, 0, 3, 4, 9, 2, 6, 7},
             {3, 4, 7, 2, 5, 6, 9, 1, 8},
             {5, 6, 8, 1, 3, 2, 7, 9, 4},
             {4, 7, 3, 5, 0, 8, 6, 2, 1},
-            {9, 2, 1, 7, 6, 4, 3, 8, 5},
+            {9, 0, 1, 7, 6, 4, 3, 8, 5},
             {2, 3, 4, 9, 1, 5, 8, 7, 6},
             {8, 5, 0, 4, 2, 7, 1, 3, 9},
             {7, 1, 9, 6, 8, 3, 5, 4, 0}
         });
-        
-        // Console.WriteLine(result.Valid());
-        // Console.WriteLine(result.Filled());
-        // Console.WriteLine(result.Win());
-        // Console.WriteLine(result2.Equals(result));
         
         watch.Start();
         var solution = SolveBoard(taskBoard);

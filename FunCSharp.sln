@@ -8,6 +8,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DoorRiddle", "DoorRiddle\Do
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SudokuSolver", "SudokuSolver\SudokuSolver.csproj", "{5E8EC112-7182-4D2D-8DA9-252FFDCB1A8D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PiDigits", "PiDigits\PiDigits.csproj", "{A5DB62C8-DBC8-473D-B0C3-76E59A21A21F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -30,5 +32,9 @@ Global
 		{5E8EC112-7182-4D2D-8DA9-252FFDCB1A8D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5E8EC112-7182-4D2D-8DA9-252FFDCB1A8D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5E8EC112-7182-4D2D-8DA9-252FFDCB1A8D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A5DB62C8-DBC8-473D-B0C3-76E59A21A21F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A5DB62C8-DBC8-473D-B0C3-76E59A21A21F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A5DB62C8-DBC8-473D-B0C3-76E59A21A21F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A5DB62C8-DBC8-473D-B0C3-76E59A21A21F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

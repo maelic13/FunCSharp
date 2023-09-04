@@ -21,12 +21,9 @@ internal static class Program
     private static double GetPiDigits(int digits)
     {
         double sum = 0;
-        for (var i = 0; i < digits; i++)
-        {
-            sum += CalculateSum(i);
-        }
+        for (var i = 0; i < digits; i++) sum += CalculateSum(i);
 
-        return (426880 * Math.Sqrt(10005)) / sum;
+        return 426880 * Math.Sqrt(10005) / sum;
     }
 
     private static double CalculateSum(int q)
@@ -39,10 +36,7 @@ internal static class Program
     private static int Factorial(int number)
     {
         var result = 1;
-        for (var i = 2; i <= number; i++)
-        {
-            result *= i;
-        }
+        for (var i = 2; i <= number; i++) result *= i;
 
         return result;
     }
@@ -50,16 +44,16 @@ internal static class Program
     private static double GetPiMonteCarloMultithreaded(int digits)
     {
         var cpus = Environment.ProcessorCount;
-        long pointsCount = (long)Math.Pow(10, 2 * digits);
+        var pointsCount = (long) Math.Pow(10, 2 * digits);
 
         var interval = pointsCount / cpus;
         var inputList = new List<long>();
         var results = new List<long>();
-        
-        for (var i = 0; i < cpus; i++) 
+
+        for (var i = 0; i < cpus; i++)
             inputList.Add(interval);
         inputList[^1] += pointsCount % cpus;
-        
+
         Parallel.ForEach(inputList, sub => results.Add(GetPoints(sub)));
 
         return 4.0 * results.Sum() / pointsCount;
@@ -67,7 +61,7 @@ internal static class Program
 
     private static double GetPiMonteCarlo(int digits)
     {
-        long pointsCount = (long)Math.Pow(10, 2 * digits);
+        var pointsCount = (long) Math.Pow(10, 2 * digits);
         var inside = GetPoints(pointsCount);
 
         return 4.0 * inside / pointsCount;
@@ -83,7 +77,7 @@ internal static class Program
             var x = rnd.NextDouble();
             var y = rnd.NextDouble();
 
-            if (Math.Sqrt(Math.Pow(x, 2) + Math.Pow(y, 2)) <= 1) { inside += 1; }
+            if (Math.Sqrt(Math.Pow(x, 2) + Math.Pow(y, 2)) <= 1) inside += 1;
         }
 
         return inside;

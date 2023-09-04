@@ -19,7 +19,7 @@ internal static class Program
             {8, 0, 0, 0, 0, 7, 1, 0, 9},
             {7, 1, 0, 6, 8, 3, 0, 0, 0}
         });
-        
+
         var result = new Board(new[,]
         {
             {6, 9, 2, 8, 7, 1, 4, 5, 3},
@@ -32,7 +32,7 @@ internal static class Program
             {8, 5, 6, 4, 2, 7, 1, 3, 9},
             {7, 1, 9, 6, 8, 3, 5, 4, 2}
         });
-        
+
         var taskBoard2 = new Board(new[,]
         {
             {6, 9, 2, 8, 7, 1, 4, 5, 3},
@@ -45,11 +45,11 @@ internal static class Program
             {8, 5, 0, 4, 2, 7, 1, 3, 9},
             {7, 1, 9, 6, 8, 3, 5, 4, 0}
         });
-        
+
         watch.Start();
         var solution = SolveBoard(taskBoard);
         watch.Stop();
-        
+
         Console.WriteLine($"Result: {solution.Win()}.");
         Console.WriteLine($"Execution time: {watch.ElapsedMilliseconds} ms.");
     }
@@ -60,7 +60,7 @@ internal static class Program
         {
             board.MakeMove(move);
             board = SolveBoard(board);
-            if (board.Win()) { return board; }
+            if (board.Win()) return board;
             board.UnmakeLastMove();
         }
 

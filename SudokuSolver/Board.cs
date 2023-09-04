@@ -2,11 +2,8 @@
 
 internal class Board
 {
-    public int[,] CurrentBoard { get; set; }
-    private List<Move> MoveHistory { get; }
-    public int[,] Root { get; }
-    private int BoardSizeIndex;
-    private int BoardSize;
+    private readonly int BoardSize;
+    private readonly int BoardSizeIndex;
 
     public Board(int[,] board)
     {
@@ -16,17 +13,20 @@ internal class Board
         BoardSizeIndex = (int) Math.Pow(board.Length, 1.0 / 4);
         BoardSize = (int) Math.Pow(BoardSizeIndex, 2);
 
-        if ((int)Math.Pow(BoardSizeIndex, 4) != board.Length)
-        {
-            throw new Exception("Board of wrong size provided.");
-        }
+        if ((int) Math.Pow(BoardSizeIndex, 4) != board.Length) throw new Exception("Board of wrong size provided.");
     }
 
-    public Board(int boardSizeIndex = 3) : this(EmptyBoard(boardSizeIndex)) { }
+    public Board(int boardSizeIndex = 3) : this(EmptyBoard(boardSizeIndex))
+    {
+    }
+
+    public int[,] CurrentBoard { get; set; }
+    private List<Move> MoveHistory { get; }
+    public int[,] Root { get; }
 
     private static int[,] EmptyBoard(int boardSizeIndex)
     {
-        var boardSize = (int)Math.Pow(boardSizeIndex, 2);
+        var boardSize = (int) Math.Pow(boardSizeIndex, 2);
         return new int[boardSize, boardSize];
     }
 
@@ -42,7 +42,7 @@ internal class Board
 
     public void Reset()
     {
-        CurrentBoard = (int[,])Root.Clone();
+        CurrentBoard = (int[,]) Root.Clone();
     }
 
     public bool Valid()
@@ -62,10 +62,10 @@ internal class Board
         foreach (var move in PossibleMoves())
         {
             MakeMove(move);
-            if (Valid()) { validMoves.Add(move); }
+            if (Valid()) validMoves.Add(move);
             UnmakeLastMove();
         }
-        
+
         return SortMoves(validMoves);
     }
 
@@ -80,6 +80,7 @@ internal class Board
                 counter.Add(move.Square, 1);
                 continue;
             }
+
             counter[move.Square]++;
         }
 
@@ -90,23 +91,20 @@ internal class Board
     {
         var possibleMoves = new List<Move>();
         for (var rowIndex = 0; rowIndex < BoardSize; rowIndex++)
+        for (var columnIndex = 0; columnIndex < BoardSize; columnIndex++)
         {
-            for (var columnIndex = 0; columnIndex < BoardSize; columnIndex++)
-            {
-                if (CurrentBoard[rowIndex, columnIndex] != 0) { continue; }
+            if (CurrentBoard[rowIndex, columnIndex] != 0) continue;
 
-                for (var number = 0; number < BoardSize; number++)
-                {
-                    possibleMoves.Add(new Move(rowIndex, columnIndex, number + 1));
-                }
-            }
+            for (var number = 0; number < BoardSize; number++)
+                possibleMoves.Add(new Move(rowIndex, columnIndex, number + 1));
         }
+
         return possibleMoves;
     }
 
     public bool MakeMove(Move move)
     {
-        if (CurrentBoard[move.Row, move.Column] != 0) { return false; }
+        if (CurrentBoard[move.Row, move.Column] != 0) return false;
 
         MoveHistory.Add(move);
         CurrentBoard[move.Row, move.Column] = move.Number;
@@ -118,13 +116,9 @@ internal class Board
         var startingIndices = new List<(int, int)>();
 
         for (var i = 0; i < BoardSize; i += BoardSizeIndex)
-        {
-            for (var j = 0; j < BoardSize; j += BoardSizeIndex)
-            {
-                startingIndices.Add((i, j));
-            }
-        }
-        
+        for (var j = 0; j < BoardSize; j += BoardSizeIndex)
+            startingIndices.Add((i, j));
+
         return startingIndices;
     }
 
@@ -132,7 +126,7 @@ internal class Board
     {
         var move = MoveHistory.LastOrDefault();
         if (move == null) return false;
-        
+
         CurrentBoard[move.Row, move.Column] = 0;
         MoveHistory.Remove(move);
 
@@ -143,10 +137,7 @@ internal class Board
     {
         var column = new int[BoardSize];
 
-        for (var i = 0; i < BoardSize; i++)
-        {
-            column[i] = CurrentBoard[i, columnIndex];
-        }
+        for (var i = 0; i < BoardSize; i++) column[i] = CurrentBoard[i, columnIndex];
         return column;
     }
 
@@ -154,10 +145,7 @@ internal class Board
     {
         var row = new int[BoardSize];
 
-        for (var i = 0; i < BoardSize; i++)
-        {
-            row[i] = CurrentBoard[rowIndex, i];
-        }
+        for (var i = 0; i < BoardSize; i++) row[i] = CurrentBoard[rowIndex, i];
         return row;
     }
 
@@ -166,12 +154,8 @@ internal class Board
         var sector = new int[BoardSizeIndex, BoardSizeIndex];
 
         for (var i = startRow; i < startRow + BoardSizeIndex; i++)
-        {
-            for (var j = startColumn; j < startColumn + BoardSizeIndex; j++)
-            {
-                sector[i - startRow, j - startColumn] = CurrentBoard[i, j];
-            }
-        }
+        for (var j = startColumn; j < startColumn + BoardSizeIndex; j++)
+            sector[i - startRow, j - startColumn] = CurrentBoard[i, j];
         return sector;
     }
 
@@ -179,10 +163,7 @@ internal class Board
     {
         var allValid = true;
 
-        for (var i = 0; i < BoardSize; i++)
-        {
-            allValid = allValid && ColumnValid(i);
-        }
+        for (var i = 0; i < BoardSize; i++) allValid = allValid && ColumnValid(i);
 
         return allValid;
     }
@@ -191,10 +172,7 @@ internal class Board
     {
         var allValid = true;
 
-        for (var i = 0; i < BoardSize; i++)
-        {
-            allValid = allValid && RowValid(i);
-        }
+        for (var i = 0; i < BoardSize; i++) allValid = allValid && RowValid(i);
 
         return allValid;
     }
@@ -203,7 +181,7 @@ internal class Board
     {
         var allSectors = GetAllSectorStartingIndices();
         var allValid = true;
-        
+
         foreach (var sectorIndices in allSectors)
         {
             var (rowIndex, columnIndex) = sectorIndices;
@@ -218,7 +196,7 @@ internal class Board
         var column = Column(columnIndex);
         var hashSet = new HashSet<double>();
 
-        return column.Where(number => number != 0).Aggregate(true, (current, number) 
+        return column.Where(number => number != 0).Aggregate(true, (current, number)
             => current && hashSet.Add(number));
     }
 
@@ -226,8 +204,8 @@ internal class Board
     {
         var row = Row(rowIndex);
         var hashSet = new HashSet<double>();
-        
-        return row.Where(number => number != 0).Aggregate(true, (current, number) 
+
+        return row.Where(number => number != 0).Aggregate(true, (current, number)
             => current && hashSet.Add(number));
     }
 
@@ -236,15 +214,9 @@ internal class Board
         var hashSet = new HashSet<double>();
 
         for (var i = 0; i < BoardSizeIndex; i++)
-        {
-            for (var j = 0; j < BoardSizeIndex; j++)
-            {
-                if (sector[i, j] != 0 && !hashSet.Add(sector[i, j]))
-                {
-                    return false;
-                }
-            }
-        }
+        for (var j = 0; j < BoardSizeIndex; j++)
+            if (sector[i, j] != 0 && !hashSet.Add(sector[i, j]))
+                return false;
         return true;
     }
 }

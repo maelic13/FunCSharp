@@ -7,7 +7,7 @@ internal static class Program
     public static void Main(string[] args)
         /*
          Experimental solution to following statistical riddle.
-         You are given 3 doors with treasure behind 1 of them. You choose 1 door, and then the host opens 1 
+         You are given 3 doors with treasure behind 1 of them. You choose 1 door, and then the host opens 1
          of the remaining doors (and always chooses the one behind which the treasure is not).
          You are then given a choice - do you open the door you chose at the beginning, or do you change your choice
          and open the remaining closed door instead? Which option maximizes your chances of finding treasure?
@@ -20,37 +20,37 @@ internal static class Program
         var resultWithChange = PlayGameMultiThreaded(cycles, true, cpus);
         watch.Stop();
         PrintResultsToConsole(resultWithChange, watch, cycles, true);
-            
+
         watch.Restart();
         var resultNoChange = PlayGameMultiThreaded(cycles, false, cpus);
         watch.Stop();
         PrintResultsToConsole(resultNoChange, watch, cycles, false);
     }
-        
+
     private static Result PlayGame(long cycles, bool changeChoice)
     {
-        var doors = new List<bool> { false, true, false };
+        var doors = new List<bool> {false, true, false};
         var rnd = new Random();
         var result = new Result();
 
-        for (var i = 0; i < cycles; i++) 
+        for (var i = 0; i < cycles; i++)
             result.AddTry(changeChoice != doors[rnd.Next(3)]);
         return result;
     }
-        
+
     private static Result PlayGameMultiThreaded(long cycles, bool changeChoice, int cpus)
     {
-        if (cpus == 1) 
+        if (cpus == 1)
             return PlayGame(cycles, changeChoice);
-            
+
         var interval = cycles / cpus;
         var inputList = new List<long>();
         var results = new List<Result>();
-            
-        for (var i = 0; i < cpus; i++) 
+
+        for (var i = 0; i < cpus; i++)
             inputList.Add(interval);
         inputList[^1] += cycles % cpus;
-            
+
         Parallel.ForEach(inputList, sub => results.Add(PlayGame(sub, changeChoice)));
         return Result.Combine(results);
     }
